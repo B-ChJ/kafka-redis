@@ -44,7 +44,66 @@ public class KafkaConsumerConfig {
 	public ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> paymentKafkaListenerContainerFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(productRankingConsumerFactory());
+		factory.setConcurrency(3);
 
 		return factory;
-}
+	}
+
+	@Bean
+	public ConsumerFactory<String, PaymentCompletedEvent> paymentHistoryConsumerFactory() {
+		Map<String, Object> props = new HashMap<>();
+
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "payment-history-group");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+
+		JsonDeserializer<PaymentCompletedEvent> deserializer = new JsonDeserializer<>(PaymentCompletedEvent.class);
+
+		return new DefaultKafkaConsumerFactory<>(
+			props,
+			new StringDeserializer(),
+			deserializer
+		);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> paymentHistoryKafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(paymentHistoryConsumerFactory());
+		factory.setConcurrency(3);
+
+		return factory;
+	}
+
+	@Bean
+	public ConsumerFactory<String, PaymentCompletedEvent> deliveryConsumerFactory() {
+		Map<String, Object> props = new HashMap<>();
+
+		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, "delivery-group");
+		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
+		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+
+		JsonDeserializer<PaymentCompletedEvent> deserializer = new JsonDeserializer<>(PaymentCompletedEvent.class);
+
+		return new DefaultKafkaConsumerFactory<>(
+			props,
+			new StringDeserializer(),
+			deserializer
+		);
+	}
+
+	@Bean
+	public ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> deliveryKafkaListenerContainerFactory() {
+		ConcurrentKafkaListenerContainerFactory<String, PaymentCompletedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
+		factory.setConsumerFactory(deliveryConsumerFactory());
+		factory.setConcurrency(3);
+
+		return factory;
+	}
 }
