@@ -15,6 +15,18 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import com.sparta.kafkaredis.common.model.kafka.event.PaymentCompletedEvent;
 
+/**
+ * Kafka Consumer 설정 클래스입니다.
+ * <p>
+ * 각 Listener(payment-history-group/product-ranking-group/delivery-group)마다
+ * Thread가 3개씩 생성되도록 setConcurrency(3)을 기존 코드에 추가했습니다.
+ * Kafka는 각 Consumer Group마다 3개의 Consumer를 갖고 있다고 인식하게 됩니다.
+ * </p>
+ *
+ * @author 변채주
+ * @version 1.0
+ * @since 2026. 01. 08.
+ */
 @Configuration
 public class KafkaConsumerConfig {
 	@Value("${spring.kafka.bootstrap-servers}")
