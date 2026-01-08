@@ -4,7 +4,6 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.sparta.kafkaredis.common.entity.Delivery;
 import com.sparta.kafkaredis.common.enums.DeliveryStatus;
-import com.sparta.kafkaredis.common.model.kafka.event.PaymentCompletedEvent;
 import com.sparta.kafkaredis.domain.delivery.model.response.DeliveryResponse;
 import com.sparta.kafkaredis.domain.delivery.repository.DeliveryRepository;
 

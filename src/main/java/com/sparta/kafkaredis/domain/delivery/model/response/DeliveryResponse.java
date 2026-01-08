@@ -1,7 +1,5 @@
 package com.sparta.kafkaredis.domain.delivery.model.response;
 
-import java.util.List;
-
 import com.sparta.kafkaredis.common.enums.DeliveryStatus;
 
 import lombok.AllArgsConstructor;

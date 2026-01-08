@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sparta.kafkaredis.common.entity.Delivery;
 import com.sparta.kafkaredis.common.enums.DeliveryStatus;
-import com.sparta.kafkaredis.domain.delivery.model.response.DeliveryResponse;
 
 public interface DeliveryRepository extends JpaRepository<Delivery, Long> {
 	List<Delivery> findByUserIdOrderByStatusUpdateAtDesc(Long userId);
